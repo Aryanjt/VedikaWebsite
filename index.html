@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Dancing+Script:wght@400;600&display=swap" rel="stylesheet">
+
+<title>Our Story ❤️</title>
+
+<style>
+
+/* ☕ BACKGROUND */
+body {
+    margin: 0;
+    font-family: 'Dancing Script', cursive;
+    overflow-x: hidden;
+
+    background-color: #ecd3a8;
+
+    background-image:
+        url('https://www.transparenttextures.com/patterns/paper-fibers.png'),
+        radial-gradient(circle at 25% 35%, rgba(90,50,20,0.35), transparent 60%),
+        radial-gradient(circle at 75% 65%, rgba(120,60,20,0.3), transparent 60%),
+        radial-gradient(circle at 50% 80%, rgba(80,40,20,0.25), transparent 60%),
+        radial-gradient(circle, transparent 55%, rgba(60,30,10,0.5));
+
+    background-blend-mode: multiply;
+}
+
+/* ☕ coffee rings */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 60% 30%, transparent 55%, rgba(120,60,20,0.6) 58%, transparent 62%),
+        radial-gradient(circle at 20% 70%, transparent 50%, rgba(100,50,20,0.5) 54%, transparent 58%);
+    pointer-events: none;
+}
+
+/* 🌑 vignette */
+body::after {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 50%, rgba(30,15,5,0.7));
+    pointer-events: none;
+}
+
+/* INTRO */
+#intro {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #3e2c23, #6b4f3a);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    z-index: 1000;
+    text-align: center;
+    transition: opacity 0.5s ease;
+}
+
+#intro h1 { font-family: 'Pacifico'; font-size: 3.5rem; }
+#intro p { font-size: 1.5rem; }
+
+#intro button {
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: none;
+    background: #ffb3c6;
+    cursor: pointer;
+}
+
+/* HERO */
+.hero { text-align: center; padding: 120px 20px; }
+.hero h1 { font-size: 3.5rem; }
+#timer { font-size: 4rem; }
+
+/* TIMELINE */
+.timeline {
+    position: relative;
+    width: 90%;
+    margin: auto;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background: #8b5e34;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+}
+
+/* CONTAINER */
+.container {
+    width: 50%;
+    padding: 20px;
+    position: relative;
+    opacity: 0;
+    transition: 0.8s;
+}
+
+.left { left: 0; transform: translateX(-50px); }
+.right { left: 50%; transform: translateX(50px); }
+
+.container.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 📸 POLAROID CARD */
+.card {
+    background: #fffdf7;
+    padding: 15px 15px 25px;
+    width: 65%;
+    margin: 40px auto;
+    position: relative;
+
+    transform-origin: top center;
+    transition: 0.3s;
+
+    /* layered depth */
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.35),
+        0 5px 10px rgba(0,0,0,0.2);
+}
+
+/* tilt */
+.left .card { transform: rotate(-3deg); }
+.right .card { transform: rotate(3deg); }
+
+.card:hover {
+    transform: scale(1.05) rotate(0deg);
+}
+
+/* 📌 tape */
+.card::before,
+.card::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 18px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 4px;
+}
+
+.card::before { top: -10px; left: 20%; transform: rotate(-10deg); }
+.card::after { top: -10px; right: 20%; transform: rotate(8deg); }
+
+/* IMAGE */
+.card img {
+    width: 100%;
+    max-width: 350px;
+    filter: sepia(35%);
+    transition: 0.3s;
+}
+
+.card:hover img {
+    box-shadow: 0 0 25px rgba(255,200,150,0.6);
+}
+
+/* TEXT */
+.card p { font-size: 1.7rem; }
+
+/* TYPEWRITER */
+.typing::after {
+    content: "|";
+    animation: blink 1s infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* HEARTS */
+.heart {
+    position: absolute;
+    font-size: 28px;
+    cursor: pointer;
+    animation: pulse 1.5s infinite, float 3s infinite;
+}
+
+@keyframes pulse { 50% { transform: scale(1.3); } }
+@keyframes float { 50% { transform: translateY(-10px); } }
+
+/* POPUP */
+#lovePopup {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background: #fffdf7;
+    padding: 15px 25px;
+    border-radius: 20px;
+    transition: 0.3s;
+    z-index: 999;
+}
+
+/* FINAL MESSAGE */
+#finalMessage {
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 120px auto;
+    width: 70%;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 1s ease;
+}
+
+#finalMessage.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* FINAL HEART */
+.final-heart {
+    font-size: 2rem;
+    display: inline-block;
+    animation: heartbeat 1.2s infinite;
+}
+@keyframes heartbeat {
+    25% { transform: scale(1.2); }
+    60% { transform: scale(1.25); }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="intro">
+<h1>Our Story 💕</h1>
+<p>Every moment with you is my favorite memory</p>
+<button onclick="enter()">Enter</button>
+</div>
+
+<div class="hero">
+<h1>We've been together for</h1>
+<div id="timer"></div>
+</div>
+
+<div class="timeline">
+
+<!-- YOUR ORIGINAL CAPTIONS KEPT EXACT -->
+<div class="container left"><div class="card"><img src="assets/img1.jpeg"><p class="typewriter">5th October 2025 - it was our first hangout together</p></div></div>
+<div class="container right"><div class="card"><img src="assets/img2.jpeg"><p class="typewriter">6th October 2025- we immediately go and climb white hills lmao</p></div></div>
+<div class="container left"><div class="card"><img src="assets/img3.jpeg"><p class="typewriter">29th October 2025- our first makeUP session</p></div></div>
+<div class="container right"><div class="card"><img src="assets/img4.jpeg"><p class="typewriter">31th October 2025- the day we started DATINGGGG❤️</p></div></div>
+<div class="container left"><div class="card"><img src="assets/img5.jpeg"><p class="typewriter">2nd November 2025- our first official date together 💗</p></div></div>
+<div class="container right"><div class="card"><img src="assets/img6.jpeg"><p class="typewriter">28th November 2025- our first study session 💗</p></div></div>
+<div class="container left"><div class="card"><img src="assets/img7.jpeg"><p class="typewriter">30th November 2025- a nice picture of us together</p></div></div>
+<div class="container right"><div class="card"><img src="assets/img8.jpeg"><p class="typewriter">11th December 2025- Our first makeOUT session</p></div></div>
+<div class="container left"><div class="card"><img src="assets/img10.jpeg"><p class="typewriter">14th December 2025- Our first polaroids together!!!!!</p></div></div>
+<div class="container right"><div class="card"><img src="assets/img11.jpeg"><p class="typewriter">14th December 2025- Our first ROADTRIPPP CRAAAAZYYYY</p></div></div>
+<div class="container left"><div class="card"><img src="assets/img13.jpeg"><p class="typewriter">13th March 2026- AQUARIUM DATEEEE</p></div></div>
+<div class="container right"><div class="card"><img src="assets/img12.jpeg"><p class="typewriter">19th March 2026- A really cute picture of ours</p></div></div>
+
+<div id="finalMessage">
+You make the ordinary feel magical without even trying. Every little moment with you, whether we’re laughing over nothing or just sitting quietly, means more to me than I can put into words. You’re not just someone I love, you’re my peace, my happiness, and my favorite part of every day. I don’t know what I did to deserve you, but I’m grateful for you in ways I’ll keep showing you, again and again. <span class="final-heart">💖</span>
+</div>
+
+</div>
+
+<audio id="music" loop>
+<source src="assets/song.mp3">
+</audio>
+
+<div id="lovePopup"><p id="loveText"></p></div>
+
+<script>
+
+/* ENTER + MUSIC */
+function enter(){
+    const intro = document.getElementById("intro");
+    intro.style.opacity = "0";
+
+    setTimeout(()=>{
+        intro.style.display = "none";
+        window.scrollTo({top:0});
+    },500);
+
+    let music = document.getElementById("music");
+    music.volume = 0;
+    music.play();
+
+    let fade = setInterval(()=>{
+        if(music.volume < 1){
+            music.volume += 0.02;
+        } else clearInterval(fade);
+    },100);
+}
+
+/* TIMER */
+const startDate=new Date("2025-10-31");
+setInterval(()=>{
+let diff=new Date()-startDate;
+let d=Math.floor(diff/(1000*60*60*24));
+document.getElementById("timer").innerText=d+" days";
+},1000);
+
+/* TYPEWRITER */
+function typeWriter(el){
+    let text = el.innerText;
+    el.innerText="";
+    let i=0;
+    el.classList.add("typing");
+
+    function typing(){
+        if(i<text.length){
+            el.innerText+=text[i++];
+            setTimeout(typing,25);
+        } else el.classList.remove("typing");
+    }
+    typing();
+}
+
+/* SCROLL */
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(e=>{
+if(e.isIntersecting){
+e.target.classList.add("show");
+
+let t=e.target.querySelector(".typewriter");
+if(t && !t.dataset.done){
+t.dataset.done=true;
+typeWriter(t);
+}
+}
+});
+},{threshold:0.3});
+
+document.querySelectorAll(".container,#finalMessage").forEach(el=>observer.observe(el));
+
+/* HEARTS */
+const messages=[
+"I love you smmmmmmm ❤️",
+"You make my life like a 100x better",
+"You da prettiest woman ",
+"I MISSS YOUUUUUUU 💕"
+];
+
+function createHearts(){
+    const pageHeight=document.body.scrollHeight;
+
+    for(let i=0;i<25;i++){
+        let h=document.createElement("div");
+        h.className="heart";
+        h.innerHTML="💖";
+
+        h.style.top=Math.random()*pageHeight+"px";
+        h.style.left=Math.random()*100+"vw";
+
+        h.onclick=()=>{
+            let popup=document.getElementById("lovePopup");
+            document.getElementById("loveText").innerText=
+            messages[Math.floor(Math.random()*messages.length)];
+
+            popup.style.transform="translateX(-50%) scale(1)";
+            setTimeout(()=>popup.style.transform="translateX(-50%) scale(0)",2000);
+        };
+
+        document.body.appendChild(h);
+    }
+}
+createHearts();
+
+</script>
+
+</body>
+</html>
